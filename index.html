@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reala Pro - Real Estate Agent Suite</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Professional Real Estate System Styling */
+        :root {
+            --primary-blue: #1e40af;
+            --primary-dark: #1e3a8a;
+            --accent-gold: #f59e0b;
+            --success-green: #10b981;
+            --warning-red: #ef4444;
+            --neutral-50: #f8fafc;
+            --neutral-100: #f1f5f9;
+            --neutral-200: #e2e8f0;
+            --neutral-600: #475569;
+            --neutral-800: #1e293b;
+            --neutral-900: #0f172a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--neutral-50) 0%, var(--neutral-100) 100%);
+            min-height: 100vh;
+            color: var(--neutral-800);
+        }
+
+        .professional-nav {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark) 100%);
+            box-shadow: 0 4px 20px rgba(30, 64, 175, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .nav-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-icon {
+            font-size: 32px;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 12px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            min-height: calc(100vh - 70px);
+        }
+
+        .page-content {
+            display: none;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .page-content.active {
+            display: block;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-section {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 60px 0;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-gold) 100%);
+            border-radius: 20px;
+            color: white;
+            box-shadow: 0 20px 40px rgba(30, 64, 175, 0.2);
+        }
+
+        .hero-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 24px;
+            font-weight: 300;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--neutral-900);
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--accent-gold));
+            border-radius: 2px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .professional-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--neutral-200);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .professional-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--accent-gold));
+        }
+
+        .professional-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-header {
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--neutral-100);
+            padding-bottom: 15px;
+        }
+
+        .card-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--neutral-900);
+            margin-bottom: 5px;
+        }
+
+        .card-subtitle {
+            color: var(--neutral-600);
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: var(--neutral-800);
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--neutral-200);
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: var(--neutral-50);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--neutral-200);
+            border-radius: 8px;
+            font-size: 16px;
+            background: var(--neutral-50);
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(30, 64, 175, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(30, 64, 175, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-success:hover {
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+        }
+
+        .calculation-results {
+            background: linear-gradient(135deg, var(--success-green) 0%, #059669 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 25px;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .result-label {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .result-value {
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--accent-gold);
+        }
+
+        .investment-highlight {
+            background: rgba(245, 158, 11, 0.1);
+            border: 2px solid var(--accent-gold);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .highlight-title {
+            color: var(--accent-gold);
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .property-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .property-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .property-image {
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-gold) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: white;
+        }
+
+        .property-content {
+            padding: 20px;
+        }
+
+        .property-price {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+        }
+
+        .property-details {
+            color: var(--neutral-600);
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .property-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .feature-tag {
+            background: var(--neutral-100);
+            color: var(--neutral-700);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .mobile-responsive {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                flex-direction: column;
+                gap: 10px;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--primary-blue);
+                padding: 20px;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+            }
+
+            .nav-menu.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-title {
+                font-size: 32px;
+            }
+
+            .hero-subtitle {
+                font-size: 18px;
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+
+            .professional-card {
+                padding: 20px;
+            }
+        }
+
+        .toggle-container {
+            display: flex;
+            background: var(--neutral-100);
+            border-radius: 10px;
+            padding: 4px;
+            margin-bottom: 25px;
+        }
+
+        .toggle-btn {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--neutral-600);
+        }
+
+        .toggle-btn.active {
+            background: white;
+            color: var(--primary-blue);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .script-section {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--primary-blue);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .script-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--neutral-900);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .script-content {
+            background: var(--neutral-50);
+            padding: 20px;
+            border-radius: 8px;
+            font-style: italic;
+            line-height: 1.6;
+            border: 1px solid var(--neutral-200);
+        }
+
+        .copy-btn {
+            background: var(--accent-gold);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background: #d97706;
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Professional Navigation -->
+    <nav class="professional-nav">
+        <div class="nav-container">
+            <div class="nav-content">
+                <a href="#" class="logo" onclick="showPage('buying')">
+                    <span class="logo-icon">🏠</span>
+                    Reala Pro
+                </a>
+                <ul class="nav-menu">
+                    <li><a href="#" class="nav-link active" onclick="showPage('buying')">🏡 Buying</a></li>
+                    <li><a href="#" class="nav-link" onclick="showPage('selling')">💰 Selling</a></li>
+                    <li><a href="#" class="nav-link" onclick="showPage('client-center')">📋 Client Center</a></li>
+                    <li><a href="#" class="nav-link" onclick="showPage('agent-assistant')">🎯 Agent Assistant</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        
+        <!-- Buying Page -->
+        <div id="buying-page" class="page-content active">
+            <div class="hero-section">
+                <h1 class="hero-title">Home Buying Analysis</h1>
+                <p class="hero-subtitle">Calculate your mortgage, analyze equity growth, and discover why buying a home is the best investment you'll ever make</p>
+            </div>
+
+            <h2 class="section-title">Comprehensive Buy Analysis</h2>
+
+            <div class="grid-2">
+                <!-- Buy Calculator -->
+                <div class="professional-card">
+                    <div class="card-header">
+                        <h3 class="card-title">Buy Analysis Calculator</h3>
+                        <p class="card-subtitle">Calculate your complete buying scenario</p>
+                    </div>
+
+                    <form id="buy-form">
+                        <div class="form-group">
+                            <label class="form-label">Current Monthly Rent</label>
+                            <input type="number" id="current-rent" class="form-input" placeholder="$2,500" value="2500">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Target Home Price</label>
+                            <input type="number" id="target-home-price" class="form-input" placeholder="$450,000" value="450000">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Down Payment Amount</label>
+                            <input type="number" id="down-payment-buy" class="form-input" placeholder="$90,000" value="90000">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Interest Rate (APR %)</label>
+                            <input type="number" id="interest-rate-buy" class="form-input" step="0.01" placeholder="7.5" value="7.5">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Loan Term</label>
+                            <select id="loan-term-buy" class="form-select">
+                                <option value="30">30 Years</option>
+                                <option value="15">15 Years</option>
+                                <option value="20">20 Years</option>
+                            </select>
+                        </div>
+
+                        <button type="button" onclick="calculateBuy()" class="btn-primary">Calculate Analysis</button>
+                    </form>
+                </div>
+
+                <!-- Buy Results -->
+                <div class="professional-card">
+                    <div class="card-header">
+                        <h3 class="card-title">Investment Analysis Results</h3>
+                        <p class="card-subtitle">Your complete buying breakdown</p>
+                    </div>
+
+                    <div id="buy-results" class="calculation-results">
+                        <div class="result-item">
+                            <span class="result-label">Monthly Mortgage Payment:</span>
+                            <span class="result-value" id="monthly-mortgage">$0</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Loan Amount:</span>
+                            <span class="result-value" id="loan-amount-buy">$0</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Total Interest Paid (30yr):</span>
+                            <span class="result-value" id="total-interest">$0</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Equity in 5 Years:</span>
+                            <span class="result-value" id="equity-5yr">$0</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Monthly Savings vs Rent:</span>
+                            <span class="result-value" id="monthly-savings">$0</span>
+                        </div>
+                    </div>
+
+                    <div class="investment-highlight">
+                        <div class="highlight-title">
+                            💎 Why Buying is the Ultimate Investment
+                        </div>
+                        <p id="investment-reason" style="color: var(--neutral-800); line-height: 1.6;">
+                            Complete your analysis to see the powerful investment benefits of homeownership...
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Property Recommendations -->
+            <div class="professional-card">
+                <div class="card-header">
+                    <h3 class="card-title">Recommended Properties</h3>
+                    <p class="card-subtitle">Homes in your area within your budget</p>
+                </div>
+
+                <div class="properties-grid" id="buy-properties">
+                    <!-- Properties will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Selling Page -->
+        <div id="selling-page" class="page-content">
+            <div class="hero-section">
+                <h1 class="hero-title">Home Selling Analysis</h1>
+                <p class="hero-subtitle">Analyze your current equity and calculate your next home purchase power</p>
+            </div>
+
+            <h2 class="section-title">Complete Selling Analysis</h2>
+
+            <div class="grid-2">
+                <!-- Sell Calculator -->
+                <div class="professional-card">
+                    <div class="card-header">
+                        <h3 class="card-title">Equity Analysis Calculator</h3>
+                        <p class="card-subtitle">Calculate your selling power</p>
+                    </div>
+
+                    <form id="sell-form">
+                        <div class="form-group">
+                            <label class="form-label">Original Purchase Price</label>
+                            <input type="number" id="original-price" class="form-input" placeholder="$350,000" value="350000">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Amount Still Owed</label>
+                            <input type="number" id="amount-owed" class="form-input" placeholder="$250,000" value="250000">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Current Home Value</label>
+                            <input type="number" id="current-value" class="form-input" placeholder="$425,000" value="425000">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Desired Down Payment for Next Home</label>
+                            <input type="number" id="desired-down-payment" class="form-input" placeholder="$100,000" value="100000">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Target Zip Code</label>
+                            <input type="text" id="target-zip" class="form-input" placeholder="90210" value="90210">
+                        </div>
+
+                        <button type="button" onclick="calculateSell()" class="btn-success">Calculate Selling Power</button>
+                    </form>
+                </div>
+
+                <!-- Sell Results -->
+                <div class="professional-card">
+                    <div class="card-header">
+                        <h3 class="card-title">Selling Power Analysis</h3>
+                        <p class="card-subtitle">Your next home buying power</p>
+                    </div>
+
+                    <div id="sell-results" class="calculation-results">
+                        <div class="result-item">
+                            <span class="result-label">Current Equity:</span>
+                            <span class="result-value" id="current-equity">$0</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Available for Down Payment:</span>
+                            <span class="result-value" id="available-down-payment">$0</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Maximum Home Price (5% down):</span>
+                            <span class="result-value" id="max-home-price">$0</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Estimated New Mortgage:</span>
+                            <span class="result-value" id="new-mortgage">$0</span>
+                        </div>
+                    </div>
+
+                    <div class="investment-highlight">
+                        <div class="highlight-title">
+                            🚀 Your Next Home Journey
+                        </div>
+                        <p id="next-home-analysis" style="color: var(--neutral-800); line-height: 1.6;">
+                            Complete your selling analysis to see your next home buying power...
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Selling Recommendations -->
+            <div class="professional-card">
+                <div class="card-header">
+                    <h3 class="card-title">Next Home Recommendations</h3>
+                    <p class="card-subtitle">Properties within your buying power</p>
+                </div>
+
+                <div class="properties-grid" id="sell-properties">
+                    <!-- Properties will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Client Center Page -->
+        <div id="client-center-page" class="page-content">
+            <div class="hero-section">
+                <h1 class="hero-title">Client Relationship Center</h1>
+                <p class="hero-subtitle">Professional client management and relationship building</p>
+            </div>
+
+            <h2 class="section-title">Comprehensive Client Management</h2>
+
+            <div class="grid-2">
+                <!-- Add Client -->
+                <div class="professional-card">
+                    <div class="card-header">
+                        <h3 class="card-title">New Client Profile</h3>
+                        <p class="card-subtitle">Complete client information capture</p>
+                    </div>
+
+                    <form id="client-form">
+                        <div class="form-group">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" id="client-name-full" class="form-input" placeholder="John & Jane Smith" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Primary Phone</label>
+                            <input type="tel" id="client-phone-primary" class="form-input" placeholder="(555) 123-4567" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" id="client-email-primary" class="form-input" placeholder="john.smith@email.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Current Address</label>
+                            <input type="text" id="client-current-address" class="form-input" placeholder="123 Current St, City, State">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Client Type</label>
+                            <select id="client-type-main" class="form-select" required>
+                                <option value="">Select Client Type</option>
+                                <option value="first-time-buyer">First-Time Buyer</option>
+                                <option value="move-up-buyer">Move-Up Buyer</option>
+                                <option value="downsize-seller">Downsize Seller</option>
+                                <option value="investor">Investor</option>
+                                <option value="relocation">Relocation</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Price Range</label>
+                            <select id="client-price-range" class="form-select">
+                                <option value="">Select Price Range</option>
+                                <option value="0-300k">$0 - $300K</option>
+                                <option value="300k-500k">$300K - $500K</option>
+                                <option value="500k-750k">$500K - $750K</option>
+                                <option value="750k-1m">$750K - $1M</option>
+                                <option value="1m+">$1M+</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Timeline</label>
+                            <select id="client-timeline" class="form-select">
+                                <option value="">Select Timeline</option>
+                                <option value="immediate">Immediate (0-3 months)</option>
+                                <option value="short-term">Short-term (3-6 months)</option>
+                                <option value="medium-term">Medium-term (6-12 months)</option>
+                                <option value="long-term">Long-term (12+ months)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Preferred Locations</label>
+                            <input type="text" id="client-preferred-locations" class="form-input" placeholder="Downtown, Suburbs, Near Schools">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Must-Have Features</label>
+                            <textarea id="client-must-haves" class="form-input" rows="3" placeholder="3 bedrooms, 2 bathrooms, garage, pool..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Additional Notes</label>
+                            <textarea id="client-notes" class="form-input" rows="3" placeholder="Special circumstances, motivations, concerns..."></textarea>
+                        </div>
+
+                        <button type="button" onclick="saveClient()" class="btn-primary">Save Client Profile</button>
+                    </form>
+                </div>
+
+                <!-- Client List -->
+                <div class="professional-card">
+                    <div class="card-header">
+                        <h3 class="card-title">Your Client Portfolio</h3>
+                        <p class="card-subtitle">Active client relationships</p>
+                    </div>
+
+                    <div id="clients-list-portfolio" class="clients-list">
+                        <p style="text-align: center; color: var(--neutral-600); padding: 40px;">
+                            📋 No clients added yet.<br>
+                            Create your first client profile to get started!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Agent Assistant Page -->
+        <div id="agent-assistant-page" class="page-content">
+            <div class="hero-section">
+                <h1 class="hero-title">Professional Agent Assistant</h1>
+                <p class="hero-subtitle">Master scripts and closing techniques for every real estate scenario</p>
+            </div>
+
+            <h2 class="section-title">Professional Communication Scripts</h2>
+
+            <!-- Buying Scripts -->
+            <div class="script-section">
+                <h3 class="script-title">
+                    🏡 Buyer Consultation Opening
+                </h3>
+                <div class="script-content">
+                    "Thank you for taking the time to meet with me today. I'm excited to help you find your dream home and build wealth through real estate. As we go through this process, I'll make sure you understand exactly how buying a home is one of the smartest financial decisions you can make. We're not just looking for a house - we're building your investment portfolio and securing your family's future. Let me show you why renting is just throwing money away, but owning builds wealth that lasts generations."
+                </div>
+                <button class="copy-btn" onclick="copyScript('buyer-consultation')">Copy Script</button>
+            </div>
+
+            <div class="script-section">
+                <h3 class="script-title">
+                    💰 Mortgage Payment Explanation
+                </h3>
+                <div class="script-content">
+                    "Here's what most people don't understand about mortgages: Your monthly payment stays exactly the same for 30 years, but your income typically goes up. That means you're paying 'less' every year in real terms. Plus, every payment you make builds equity - that's money in your pocket, not your landlord's. Unlike rent, which increases every year, your mortgage payment is locked in. And the best part? The government gives you a huge tax deduction on mortgage interest - that's money back in your pocket."
+                </div>
+                <button class="copy-btn" onclick="copyScript('mortgage-explanation')">Copy Script</button>
+            </div>
+
+            <div class="script-section">
+                <h3 class="script-title">
+                    📈 Investment Growth Explanation
+                </h3>
+                <div class="script-content">
+                    "Let me show you the math that will change your life. If you buy a $450,000 home with 20% down, you'll have $90,000 in equity immediately. Even if your home only appreciates 3% per year (below historical average), in 5 years you'll have over $150,000 in equity. Meanwhile, if you're renting and paying $2,500/month, you'll have paid $150,000 to someone else with nothing to show for it. That's a $300,000 difference! Your home is the only investment where the bank finances 80% of it and you get 100% of the appreciation."
+                </div>
+                <button class="copy-btn" onclick="copyScript('investment-growth')">Copy Script</button>
+            </div>
+
+            <!-- Selling Scripts -->
+            <div class="script-section">
+                <h3 class="script-title">
+                    🎯 Seller Motivation Script
+                </h3>
+                <div class="script-content">
+                    "I can see you have significant equity in your home - that's fantastic! This equity isn't just sitting there; it's your ticket to your next level of living. Whether you want to upgrade to your dream home, downsize for simplicity, or invest in multiple properties, that equity gives you options most people don't have. The real estate market is moving fast, and buyers are ready to pay premium prices. Let's capture this equity now while the market is hot and position you for your next chapter."
+                </div>
+                <button class="copy-btn" onclick="copyScript('seller-motivation')">Copy Script</button>
+            </div>
+
+            <div class="script-section">
+                <h3 class="script-title">
+                    🚀 Next Home Power Script
+                </h3>
+                <div class="script-content">
+                    "Based on your current equity, you have serious buying power for your next home. We're talking about putting $100,000 down on a $2 million property instead of starting from scratch. That's the power of building equity - it compounds your wealth and opens doors you never thought possible. Most people work their entire lives and never build this kind of wealth. Your home equity is your secret weapon for creating generational wealth."
+                </div>
+                <button class="copy-btn" onclick="copyScript('next-home-power')">Copy Script</button>
+            </div>
+
+            <!-- Closing Scripts -->
+            <div class="script-section">
+                <h3 class="script-title">
+                    🎯 Deal Closing Script
+                </h3>
+                <div class="script-content">
+                    "Here's what I need you to understand: Every day you wait is money out of your pocket. Real estate prices increase, interest rates could rise, and that perfect home you love might be gone tomorrow. But here's what won't change - my commitment to getting you the best deal and making this process as smooth as possible. I've helped hundreds of families just like yours, and I can tell you with certainty: the best time to buy was yesterday, and the second-best time is today. Are you ready to start building wealth instead of just paying someone else's mortgage?"
+                </div>
+                <button class="copy-btn" onclick="copyScript('deal-closing')">Copy Script</button>
+            </div>
+
+            <div class="script-section">
+                <h3 class="script-title">
+                    🔥 Urgency Creation Script
+                </h3>
+                <div class="script-content">
+                    "The market moves at lightning speed right now. Good homes are selling within days, often above asking price. I've seen clients miss out on their dream home because they wanted to 'think about it' for a week. Don't let that be you. The difference between acting now and waiting could cost you tens of thousands of dollars in appreciation and equity. I'm not trying to pressure you - I'm trying to protect your financial future. Are you ready to secure your family's financial foundation?"
+                </div>
+                <button class="copy-btn" onclick="copyScript('urgency-creation')">Copy Script</button>
+            </div>
+
+            <div class="script-section">
+                <h3 class="script-title">
+                    💎 Value Proposition Script
+                </h3>
+                <div class="script-content">
+                    "Let me tell you what makes me different from other agents. I don't just help you buy and sell houses - I build your wealth through real estate. Every client I work with becomes part of my investment family. I don't disappear after the sale; I'm your real estate advisor for life. When you're ready to upgrade, downsize, or invest, I'm here. When your friends need an agent, I hope you'll refer them to me. This isn't a transaction - it's the beginning of a long-term relationship that will benefit your family for generations."
+                </div>
+                <button class="copy-btn" onclick="copyScript('value-proposition')">Copy Script</button>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
